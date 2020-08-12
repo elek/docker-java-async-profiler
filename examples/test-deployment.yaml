@@ -1,0 +1,41 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: test
+  name: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      containers:
+      - image: centos
+        name: centos
+        args:
+        - sleep
+        - infinity
+        resources: {}
+        volumeMounts:
+        - name: java-async-profiler
+          mountPath: /opt/java-async-profiler
+      initContainers:
+      - name: java-async-profiler-copy
+        image: elek/java-async-profiler
+        command:
+        - bash
+        - -c
+        - cp -r /opt/java-async-profiler/* /tmp/java-async-profiler/
+        volumeMounts:
+        - name: java-async-profiler
+          mountPath: /tmp/java-async-profiler
+      volumes:
+      - name: java-async-profiler
+        emptyDir: {}

@@ -1,0 +1,6 @@
+source:
+ - path: ../flekszible
+import:
+ - path: java-async-profiler
+transformations:
+ - type: java-async-profiler/install
